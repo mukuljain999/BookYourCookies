@@ -30,10 +30,11 @@ export function CustomerLogin(){
       axios.post('http://localhost:9083/customer/login', loginData).then((response => {
           console.log(response);
           console.log(response.data);
+          console.log(loginData);
           if(response.data.status) {
               sessionStorage.setItem('customerId', response.data.customerId);
               sessionStorage.setItem('name', response.data.name);
-              navigate('/book-your-table')
+              navigate('/')
           }
           else {
             alert("Invalid Login Details");
@@ -64,7 +65,7 @@ export function CustomerLogin(){
                      
 
                       <div className="form-outline mb-4">
-                        <input type="email" name="customerEmailId" className="form-control form-control-lg" onChange={handleInput} />
+                        <input type="email" name="email" className="form-control form-control-lg" onChange={handleInput} />
                         <label className="form-label" htmlFor="form2Example17">Email address</label>
                       </div>
 

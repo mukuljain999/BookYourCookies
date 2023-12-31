@@ -1,48 +1,62 @@
 // CustomerProfilePage.jsx
-import React, { useState } from 'react';
-import { Container, Row, Col, Image, Button, Card, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import customerImage from '../images/blankperson.png'
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+  Card,
+  Form,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import customerImage from "../images/blankperson.png";
+import { LinkContainer } from "react-router-bootstrap";
+import axios from "axios";
 
 const CustomerProfile = () => {
-  // Sample customer data
   const [customerData, setCustomerData] = useState({
-    name: 'Virat Kohli',
-    password: '********',
-    dateOfBirth: '1988-11-05',
-    gender: 'Male',
-    city: 'Mumbai',
-    state: 'Maharashtra',
-    pincode: '400001',
-    image: customerImage,
-    details: {
-      email: 'virat.kohli@gmail.com',
-      phone: '9999999999',
-      address: 'Nord Street, Mumbai',
-    },
-    tableBookings: {
-      lastBooking: '2023-01-15',
-      upcomingBooking: '2023-02-01',
-    },
-    orderStats: {
-      totalOrders: 25,
-      successfulOrders: 20,
-      pendingOrders: 5,
-    },
+    name: "",
+    password: "",
+    dateOfBirth: "",
+    gender: "",
+    city: "",
+    state: "",
+    pincode: "",
+    email: "",
+    phoneNumber: "",
+    address: " ",
   });
+
+  const populateCustomerState = async () => {
+    try {
+      const customerId = sessionStorage.getItem("customerId");
+      console.log(customerId);
+      const response = await axios.get(
+        `http://localhost:9083/customer/fetch/${customerId}`
+      );
+      console.log(response.data);
+      setCustomerData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    populateCustomerState();
+  }, []);
 
   const [editDetails, setEditDetails] = useState(false);
   const navigate = useNavigate();
 
   const handleEditDetails = () => {
     // Redirect to the edit form page
-    navigate('/edit-customer-details');
+    navigate("/edit-customer");
   };
 
   const handleSaveDetails = () => {
     // Implement your logic for saving customer details here
-    console.log('Save button clicked');
+    console.log("Save button clicked");
     setEditDetails(false);
   };
 
@@ -57,179 +71,123 @@ const CustomerProfile = () => {
   return (
     <Container className="mt-4">
       <Row>
-        <Col md={4}>
-          <Image
-            src={customerData.image}
-            alt={customerData.name}
-            roundedCircle
-            fluid
-            style={{ maxWidth: '150px' }}
-          />
-          <h4 className="mt-2">{customerData.name}</h4>
-        </Col>
         <Col md={8}>
           <Card>
             <Card.Header>
-              <h5>Details</h5>
-              {!editDetails && (
-                <LinkContainer to={'/edit-customer'}>
-                <Button variant="outline-primary" onClick={handleEditDetails}>
-                  Edit
-                </Button></LinkContainer>
-              )}
-              {editDetails && (
-                <Button variant="success" onClick={handleSaveDetails}>
-                  Save
-                </Button>
-              )}
+              <h5>Customer Details</h5>
             </Card.Header>
             <Card.Body>
-              <dl className="row">
-                <dt className="col-sm-3">Name:</dt>
-                <dd className="col-sm-9">
-                  {editDetails ? (
-                    <Form.Control
-                      type="text"
-                      value={customerData.name}
-                      onChange={(e) => handleChange('name', e.target.value)}
-                    />
-                  ) : (
-                    customerData.name
-                  )}
-                </dd>
-
-                <dt className="col-sm-3">Email:</dt>
-                <dd className="col-sm-9">{customerData.details.email}</dd>
-
-                <dt className="col-sm-3">Phone:</dt>
-                <dd className="col-sm-9">{customerData.details.phone}</dd>
-
-                <dt className="col-sm-3">Address:</dt>
-                <dd className="col-sm-9">
-                  {editDetails ? (
-                    <Form.Control
-                      type="text"
-                      value={customerData.details.address}
-                      onChange={(e) => handleChange('address', e.target.value)}
-                    />
-                  ) : (
-                    customerData.details.address
-                  )}
-                </dd>
-
-                <dt className="col-sm-3">Password:</dt>
-                <dd className="col-sm-9">
-                  {editDetails ? (
-                    <Form.Control
-                      type="password"
-                      value={customerData.password}
-                      onChange={(e) => handleChange('password', e.target.value)}
-                    />
-                  ) : (
-                    customerData.password
-                  )}
-                </dd>
-
-                <dt className="col-sm-3">Date of Birth:</dt>
-                <dd className="col-sm-9">
-                  {editDetails ? (
-                    <Form.Control
-                      type="date"
-                      value={customerData.dateOfBirth}
-                      onChange={(e) => handleChange('dateOfBirth', e.target.value)}
-                    />
-                  ) : (
-                    customerData.dateOfBirth
-                  )}
-                </dd>
-
-                <dt className="col-sm-3">Gender:</dt>
-                <dd className="col-sm-9">
-                  {editDetails ? (
-                    <Form.Control
-                      as="select"
-                      value={customerData.gender}
-                      onChange={(e) => handleChange('gender', e.target.value)}
-                    >
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                    </Form.Control>
-                  ) : (
-                    customerData.gender
-                  )}
-                </dd>
-
-                {editDetails && (
-                  <>
-                    <dt className="col-sm-3">City:</dt>
-                    <dd className="col-sm-9">
+              {customerData ? (
+                <Form>
+                  <Form.Group as={Row} controlId="formName">
+                    <Form.Label column sm={3}>
+                      Name:
+                    </Form.Label>
+                    <Col sm={9}>
                       <Form.Control
                         type="text"
-                        value={customerData.city}
-                        onChange={(e) => handleChange('city', e.target.value)}
+                        readOnly
+                        value={customerData.name}
                       />
-                    </dd>
+                    </Col>
+                  </Form.Group>
 
-                    <dt className="col-sm-3">State:</dt>
-                    <dd className="col-sm-9">
+                  <Form.Group as={Row} controlId="formEmail">
+                    <Form.Label column sm={3}>
+                      Email:
+                    </Form.Label>
+                    <Col sm={9}>
                       <Form.Control
                         type="text"
-                        value={customerData.state}
-                        onChange={(e) => handleChange('state', e.target.value)}
+                        readOnly
+                        value={customerData.email}
                       />
-                    </dd>
+                    </Col>
+                  </Form.Group>
 
-                    <dt className="col-sm-3">Pincode:</dt>
-                    <dd className="col-sm-9">
+                  <Form.Group as={Row} controlId="formPhone">
+                    <Form.Label column sm={3}>
+                      Phone:
+                    </Form.Label>
+                    <Col sm={9}>
                       <Form.Control
                         type="text"
-                        value={customerData.pincode}
-                        onChange={(e) => handleChange('pincode', e.target.value)}
+                        readOnly
+                        value={customerData.phoneNumber}
                       />
-                    </dd>
-                  </>
-                )}
-              </dl>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                    </Col>
+                  </Form.Group>
 
-      <Row className="mt-4">
-        <Col md={6} className="d-flex h-100">
-          <Card>
-            <Card.Header>
-              <h5>Last and Upcoming Table Bookings</h5>
-            </Card.Header>
-            <Card.Body className="d-flex flex-column h-100">
-              <dl className="row">
-                <dt className="col-sm-6">Last Booking:</dt>
-                <dd className="col-sm-6">{customerData.tableBookings.lastBooking}</dd>
+                  <Form.Group as={Row} controlId="formAddress">
+                    <Form.Label column sm={3}>
+                      Address:
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control
+                        type="text"
+                        readOnly
+                        value={customerData.address}
+                      />
+                    </Col>
+                  </Form.Group>
 
-                <dt className="col-sm-6">Upcoming Booking:</dt>
-                <dd className="col-sm-6">{customerData.tableBookings.upcomingBooking}</dd>
-              </dl>
-            </Card.Body>
-          </Card>
-        </Col>
+                  <Form.Group as={Row} controlId="formPassword">
+                    <Form.Label column sm={3}>
+                      Password:
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control
+                        type="password"
+                        readOnly
+                        value={customerData.password}
+                      />
+                    </Col>
+                  </Form.Group>
 
-        <Col md={6} className="d-flex h-100">
-          <Card>
-            <Card.Header>
-              <h5>Order Statistics</h5>
-            </Card.Header>
-            <Card.Body className="d-flex flex-column h-100">
-              <dl className="row">
-                <dt className="col-sm-6">Total Orders:</dt>
-                <dd className="col-sm-6">{customerData.orderStats.totalOrders}</dd>
+                  <Form.Group as={Row} controlId="formDateOfBirth">
+                    <Form.Label column sm={3}>
+                      Date of Birth:
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control
+                        type="date"
+                        readOnly
+                        value={customerData.dateOfBirth}
+                      />
+                    </Col>
+                  </Form.Group>
 
-                <dt className="col-sm-6">Successful Orders:</dt>
-                <dd className="col-sm-6">{customerData.orderStats.successfulOrders}</dd>
+                  <Form.Group as={Row} controlId="formGender">
+                    <Form.Label column sm={3}>
+                      Gender:
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control
+                        as="select"
+                        readOnly
+                        value={customerData.gender}
+                      >
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                      </Form.Control>
+                    </Col>
+                  </Form.Group>
 
-                <dt className="col-sm-6">Pending Orders:</dt>
-                <dd className="col-sm-6">{customerData.orderStats.pendingOrders}</dd>
-              </dl>
+                  <Form.Group as={Row}>
+                    <Col sm={{ span: 9, offset: 3 }}>
+                      <LinkContainer to={'/edit-customer'}>
+                        
+                        <Button variant="primary" onClick={handleEditDetails}>
+                          Edit
+                        </Button>
+                      </LinkContainer>
+                    </Col>
+                  </Form.Group>
+                </Form>
+              ) : (
+                <p>No data</p>
+              )}
             </Card.Body>
           </Card>
         </Col>

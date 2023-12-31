@@ -91,7 +91,7 @@ export function RestaurantRegistration() {
           if (response.data.status) {
            
             alert("Registered successfully!");
-            navigate('/login');
+            navigate('/restaurant-login');
             
           } else {
             alert("Registration Unsuccessful!");
