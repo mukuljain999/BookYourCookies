@@ -1,0 +1,57 @@
+/* ContactUs.css */
+
+/* Container Style */
+.Container {
+    margin-top: 5rem;
+}
+
+/* Contact Us Card Style */
+.Card {
+    background-color: #f8d7da;
+    /* Light red background */
+    border-color: #f5c6cb;
+    /* Light red border color */
+    margin-bottom: 2rem;
+}
+
+/* Ask a Question Section Style */
+.AskQuestion {
+    margin-top: 2rem;
+}
+
+/* FAQ Section Style */
+.FAQ {
+    margin-top: 4rem;
+}
+
+.accordionItem {
+    background-color: #f8d7da;
+    /* Light red background */
+    border-color: #f5c6cb;
+}
+
+/* Testimonials Section Style */
+.Testimonials {
+    margin-bottom: 5rem;
+    margin-top: 3rem;
+}
+
+
+.TestimonialContainer {
+    display: flex;
+    justify-content: space-between;
+    /* Adjust as needed */
+}
+
+
+/* Testimonial Card Style */
+.TestimonialCard {
+    background-color: #f8d7da;
+    /* Light red background */
+    border-color: #f5c6cb;
+    /* Light red border color */
+    margin-bottom: 1rem;
+    flex: 1;
+    margin-right: 15px;
+    /* Adjust spacing between cards */
+}
