@@ -3,7 +3,7 @@ import { Form, Row, Button, Col } from 'react-bootstrap';
 import '../css/CustomerRegistration.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import customerregistration from '../images/customerregistration.jpg';
-
+import axios from 'axios';
 const CustomerRegistration = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -68,6 +68,24 @@ const CustomerRegistration = () => {
         if (validateForm()) {
             try {
                 setIsSubmitted(true);
+                console.log('Form data:::', formData);
+                const response = await axios.post('http://localhost:9083/customer/register', formData);
+                if (response.ok) {
+                    // Form data successfully sent to the server
+                    // Handle success or reset the form
+                    setFormData({
+                        name: '',
+                        email: '',
+                        password: '',
+                        gender: '',
+                        dateOfBirth: '',
+                        phoneNumber: '',
+                    });
+                } else {
+                    // Handle the case when the server returns an error
+                    console.log('Server error:', response.statusText);
+                }
+
                 setTimeout(() => {
                     setIsSubmitted(false);
                 }, 1500);
