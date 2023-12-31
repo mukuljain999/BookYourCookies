@@ -1,0 +1,55 @@
+/* Add this styling to your CSS file or within your component */
+
+.container {
+    padding: 20px; /* Add padding to the container */
+  }
+  
+  .card {
+    margin-bottom: 20px; /* Add margin to the bottom of each card */
+  }
+  
+  dl.row {
+    margin-bottom: 15px; /* Add margin to the bottom of each row in dl */
+  }
+  
+  .col-sm-3 {
+    font-weight: bold; /* Make the left column in dl bold for labels */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  h5 {
+    margin-bottom: 10px; /* Add margin to the bottom of each h5 */
+  }
+  
+  .btn {
+    margin-right: 10px; /* Add margin to the right of each button */
+  }
+  
+  /* Adjustments for the image and name section */
+  .row > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row h4 {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    .row {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .row > div:first-child {
+      margin-bottom: 20px;
+    }
+  }
+  

@@ -1,0 +1,22 @@
+/* EditFormPage.css */
+
+/* Style for heading */
+h2 {
+    color: black;
+  }
+  
+  /* Style for field names */
+  .text-white {
+    color: black !important;
+  }
+  
+  /* Style for form control labels */
+  .form-label {
+    color: black;
+  }
+  
+  /* Style for invalid feedback */
+  .text-white.invalid-feedback {
+    color: #dc3545; /* Use the desired color for invalid feedback */
+  }
+  

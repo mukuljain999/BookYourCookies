@@ -8,7 +8,7 @@ export const Footer = () => {
     return (
         <>
         <footer style={footerStyle}>
-                <p>&copy; 2023 Book Your Cookiesz</p>
+                <p>&copy; 2023 Book Your Cookiez</p>
                 <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faFacebook} style={iconStyle} />
                 </a>
