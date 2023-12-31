@@ -8,7 +8,7 @@ import {
   Button,
   CardTitle,
 } from "react-bootstrap";
-import image1 from "../images/row1.jpg";
+import image1 from "../images/row2.jpg";
 import image2 from "../images/row2.jpg";
 import image3 from "../images/row3.jpg";
 import image4 from "../images/row4.jpg";

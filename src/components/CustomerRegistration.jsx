@@ -216,9 +216,7 @@ const CustomerRegistration = () => {
                                             </div>
 
                                             <div className="d-flex justify-content-end pt-3">
-                                                <button type="button" className="btn btn-light btn-lg">
-                                                    Reset all
-                                                </button>
+                                                
                                                 <button type="button" className="btn btn-warning btn-lg ms-2" onClick={handleSubmit}>
                                                     Submit form
                                                 </button>
